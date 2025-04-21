@@ -14,5 +14,6 @@ router.post("/verifyotp", usercontroller.verifyOtp);
 router.post("/getonedetailsdashboard", usercontroller.get1detailsdashboard); 
 router.post("/saveMessage", usercontroller.saveMessage); 
 router.post("/getMessages", usercontroller.getMessages);
+router.get("/all-users", usercontroller.getAllUsers);
 
 module.exports = router;

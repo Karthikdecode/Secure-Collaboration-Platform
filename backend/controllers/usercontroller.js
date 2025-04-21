@@ -187,14 +187,32 @@ const get1detailsdashboard = async (req, res) => {
   };
 
 
+  // const saveMessage = async (req, res) => {
+  //   try {
+  //     const { sender, receiver, message } = req.body;
+  //     const newMessage = new Message({ sender, receiver, message });
+  //     await newMessage.save();
+  //     res.status(200).json({ status: true, message: 'Message saved' });
+  //   } catch (error) {
+  //     res.status(500).json({ status: false, message: 'Error saving message' });
+  //   }
+  // };
+
   const saveMessage = async (req, res) => {
     try {
       const { sender, receiver, message } = req.body;
-      const newMessage = new Message({ sender, receiver, message });
-      await newMessage.save();
-      res.status(200).json({ status: true, message: 'Message saved' });
-    } catch (error) {
-      res.status(500).json({ status: false, message: 'Error saving message' });
+  
+      if (!sender || !receiver || !message) {
+        return res.status(400).json({ error: 'Missing required fields' });
+      }
+  
+      const newMsg = new  Message({ sender, receiver, message });
+      await newMsg.save();
+  
+      res.status(200).json({ success: true, data: newMsg });
+    } catch (err) {
+      console.error('Error saving message:', err);
+      res.status(500).json({ success: false, error: 'Server Error' });
     }
   };
   
@@ -212,6 +230,20 @@ const get1detailsdashboard = async (req, res) => {
       res.status(500).json({ status: false, message: 'Error fetching messages' });
     }
   };
+
+  
+// usercontroller.js
+const getAllUsers = async (req, res) => {
+  try {
+    const { currentUserId } = req.query;
+    const users = await User.find({ _id: { $ne: currentUserId } });
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch users" });
+  }
+};
+
+  
   
   
 
@@ -222,6 +254,8 @@ const get1detailsdashboard = async (req, res) => {
     verifyOtp,
     get1detailsdashboard,
     saveMessage,
-    getMessages
+    getMessages,
+    getAllUsers
+
 
   };

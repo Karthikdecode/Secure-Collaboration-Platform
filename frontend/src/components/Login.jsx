@@ -26,12 +26,18 @@ const Login = () => {
 
       const result = await response.json();
 
+      // if (response.ok) {
+      //   alert('Login successful!');
+      //   localStorage.setItem('userEmail', email);
+        
+      //   localStorage.setItem('userToken', result.token); // If backend sends a token
+      //   navigate('/dashboard-chat'); // Redirect to your dashboard or home page
+
       if (response.ok) {
         alert('Login successful!');
-        localStorage.setItem('userEmail', email);
-        
-        localStorage.setItem('userToken', result.token); // If backend sends a token
-        navigate('/dashboard-chat'); // Redirect to your dashboard or home page
+        sessionStorage.setItem('user', JSON.stringify(result.user)); // Store user for the session only
+        navigate('/dashboard-chat');
+
       } else {
         alert(result.message || 'Login failed.');
       }

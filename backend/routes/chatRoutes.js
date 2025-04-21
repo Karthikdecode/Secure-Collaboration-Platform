@@ -5,4 +5,5 @@ const { saveMessage, getMessages } = require('../controllers/usercontroller');
 router.post('/save', saveMessage);
 router.post('/get', getMessages);
 
+
 module.exports = router;
